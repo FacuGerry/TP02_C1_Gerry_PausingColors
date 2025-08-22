@@ -3,7 +3,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [Header("Attributes")]
-    public float velocity = 0.05f; //Velocidad predefinida para el movimiento
+    public float speed = 0.05f; //Velocidad predefinida para el movimiento
     public int rotation = 10; //Cuanto va a rotar el objeto
 
     //Declaracion de las teclas para poder modificarlas desde el inspector
@@ -30,22 +30,22 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKey(GoUp)) //Moverse arriba
         {
-            transform.position = transform.position + new Vector3(0, velocity, 0);
+            transform.position = transform.position + new Vector3(0, speed, 0);
         }
 
         if (Input.GetKey(GoDown)) //Moverse abajo
         {
-            transform.position = transform.position + new Vector3(0, -velocity, 0);
+            transform.position = transform.position + new Vector3(0, -speed, 0);
         }
 
         if (Input.GetKey(GoLeft)) //Moverse a la izquierda
         {
-            transform.position = transform.position + new Vector3(-velocity, 0, 0);
+            transform.position = transform.position + new Vector3(-speed, 0, 0);
         }
 
         if (Input.GetKey(GoRight)) //Moverse a la derecha
         {
-            transform.position = transform.position + new Vector3(velocity, 0, 0);
+            transform.position = transform.position + new Vector3(speed, 0, 0);
         }
 
     }

@@ -1,9 +1,17 @@
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Panels : MonoBehaviour
 {
+    [Header("Players")]
+    [SerializeField] private GameObject player1;
+    [SerializeField] private GameObject player2;
+    private Movement player1Speed;
+    private Movement player2Speed;
+
+
 
     [Header("Panel Settings")]
     [SerializeField] private GameObject panelPause;
@@ -19,26 +27,34 @@ public class Panels : MonoBehaviour
     [SerializeField] private Button btnBackCredits;
 
     [Header("Slider Settings")]
-    [SerializeField] private Slider speedPlayer1;
-    [SerializeField] private Slider speedPlayer2;
+    [SerializeField] private Slider sliderSpeedPlayer1;
+    [SerializeField] private Slider sliderSpeedPlayer2;
+
+    [Header("Text Settings")]
+    [SerializeField] private Text textSpeedPlayer1;
+    [SerializeField] private Text textSpeedPlayer2;
 
     private bool isPause = false;
 
-    void Awake()
+    private void Awake()
     {
+        player1Speed = player1.GetComponent<Movement>();
+        player2Speed = player2.GetComponent<Movement>();
+
         btnPlay.onClick.AddListener(Resume);
         btnOptions.onClick.AddListener(OnOptionsClicked);
         btnCredits.onClick.AddListener(OnCreditsClicked);
         btnExit.onClick.AddListener(OnExitClicked);
         btnBackOptions.onClick.AddListener(OnBackOptionsClicked);
         btnBackCredits.onClick.AddListener(OnBackCreditsClicked);
+
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!isPause)
+            if (isPause == false)
             {
                 Pause();
             }
@@ -47,50 +63,85 @@ public class Panels : MonoBehaviour
                 Resume();
             }
         }
+
+        ChangeSpeed();
+
+
     }
 
-    void Pause()
+    private void OnDestroy()
+    {
+        btnPlay.onClick.RemoveAllListeners();
+        btnOptions.onClick.RemoveAllListeners();
+        btnCredits.onClick.RemoveAllListeners();
+        btnExit.onClick.RemoveAllListeners();
+        btnBackOptions.onClick.RemoveAllListeners();
+        btnBackCredits.onClick.RemoveAllListeners();
+    }
+
+    public void Pause()
     {
         Time.timeScale = 0;
         isPause = true;
         panelPause.SetActive(true);
     }
 
-    void Resume()
+    public void Resume()
     {
         Time.timeScale = 1;
         isPause = false;
         panelPause.SetActive(false);
     }
 
-    void OnOptionsClicked()
+    public void OnOptionsClicked()
     {
         panelPause.SetActive(false);
         panelOptions.SetActive(true);
     }
 
-    void OnCreditsClicked()
+    public void OnCreditsClicked()
     {
         panelPause.SetActive(false);
         panelCredits.SetActive(true);
     }
 
-    void OnExitClicked()
+    public void OnExitClicked()
     {
         EditorApplication.ExitPlaymode();
         Application.Quit();
     }
 
-    void OnBackOptionsClicked()
+    public void OnBackOptionsClicked()
     {
-            panelOptions.SetActive(false);
-            panelPause.SetActive(true);
+        panelOptions.SetActive(false);
+        panelPause.SetActive(true);
     }
 
-    void OnBackCreditsClicked()
+    public void OnBackCreditsClicked()
     {
-            panelCredits.SetActive(false);
-            panelPause.SetActive(true);
+        panelCredits.SetActive(false);
+        panelPause.SetActive(true);
     }
+
+    public void ChangeSpeed()
+    {
+        sliderSpeedPlayer1.onValueChanged.AddListener((speed) =>
+        {
+            player1Speed.speed = speed;
+            textSpeedPlayer1.text = speed.ToString();
+
+        });
+
+        sliderSpeedPlayer2.onValueChanged.AddListener((speed) =>
+        {
+            player2Speed.speed = speed;
+            textSpeedPlayer2.text = speed.ToString();
+
+        });
+
+
+    }
+
+
 
 }
