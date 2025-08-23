@@ -35,6 +35,8 @@ public class Panels : MonoBehaviour
     [SerializeField] private Text textSpeedPlayer2;
 
     private bool isPause = false;
+    private bool isOptions = false;
+    private bool isCredits = false;
 
     private void Awake()
     {
@@ -54,13 +56,16 @@ public class Panels : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isPause == false)
+            if (isPause == false && isOptions == false && isCredits == false)
             {
                 Pause();
             }
             else
             {
-                Resume();
+                if (isOptions == false && isCredits == false)
+                {
+                    Resume();
+                }
             }
         }
 
@@ -97,12 +102,14 @@ public class Panels : MonoBehaviour
     {
         panelPause.SetActive(false);
         panelOptions.SetActive(true);
+        isOptions = true;
     }
 
     public void OnCreditsClicked()
     {
         panelPause.SetActive(false);
         panelCredits.SetActive(true);
+        isOptions = true;
     }
 
     public void OnExitClicked()
@@ -115,12 +122,14 @@ public class Panels : MonoBehaviour
     {
         panelOptions.SetActive(false);
         panelPause.SetActive(true);
+        isOptions = false;
     }
 
     public void OnBackCreditsClicked()
     {
         panelCredits.SetActive(false);
         panelPause.SetActive(true);
+        isCredits = false;
     }
 
     public void ChangeSpeed()
@@ -128,14 +137,14 @@ public class Panels : MonoBehaviour
         sliderSpeedPlayer1.onValueChanged.AddListener((speed) =>
         {
             player1Speed.speed = speed;
-            textSpeedPlayer1.text = speed.ToString();
+            textSpeedPlayer1.text = speed.ToString("0.00");
 
         });
 
         sliderSpeedPlayer2.onValueChanged.AddListener((speed) =>
         {
             player2Speed.speed = speed;
-            textSpeedPlayer2.text = speed.ToString();
+            textSpeedPlayer2.text = speed.ToString("0.00");
 
         });
 
