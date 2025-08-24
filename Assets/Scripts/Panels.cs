@@ -109,7 +109,7 @@ public class Panels : MonoBehaviour
     {
         panelPause.SetActive(false);
         panelCredits.SetActive(true);
-        isOptions = true;
+        isOptions = false;
     }
 
     public void OnExitClicked()
