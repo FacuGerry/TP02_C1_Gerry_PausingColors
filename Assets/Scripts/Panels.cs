@@ -11,8 +11,6 @@ public class Panels : MonoBehaviour
     private Movement player1Speed;
     private Movement player2Speed;
 
-
-
     [Header("Panel Settings")]
     [SerializeField] private GameObject panelPause;
     [SerializeField] private GameObject panelOptions;
